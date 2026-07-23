@@ -23,4 +23,5 @@ public class CartSteps{
 		assertEquals(expectedCount, inventoryPage.getCartBadgeCount());
 	}
 	
+	
 }
