@@ -6,3 +6,11 @@ Given I open the SauceDemo login page
 And I login with username "standard_user" and password "secret_sauce"
 When I add the "Sauce Labs Backpack" product to the cart
 Then the shopping cart badge should display "1"
+
+Scenario: Remove a product from the shopping cart
+
+Given I open the SauceDemo login page
+And I login with username "standard_user" and password "secret_sauce"
+And I add the "Sauce Labs Backpack" product to the cart
+When I remove the "Sauce Labs Backpack" product from the cart
+Then the shopping cart badge should disappear

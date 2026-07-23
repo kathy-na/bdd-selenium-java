@@ -1,6 +1,7 @@
 package com.automation.stepdefinitions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.automation.factory.DriverFactory;
 import com.automation.pages.InventoryPage;
@@ -12,7 +13,6 @@ public class CartSteps{
 	
 	@When("I add the {string} product to the cart")
 	public void i_add_the_product_to_the_cart(String productName) {
-		
 		inventoryPage = new InventoryPage(DriverFactory.getDriver());
 		inventoryPage.addProductToCart(productName);
 	}
@@ -23,5 +23,14 @@ public class CartSteps{
 		assertEquals(expectedCount, inventoryPage.getCartBadgeCount());
 	}
 	 
+	@When("I remove the {string} product from the cart")
+	public void i_remove_the_product_from_the_cart(String productName) {
+		inventoryPage = new InventoryPage(DriverFactory.getDriver());
+		inventoryPage.removeProduct(productName);
+	}
 	
+	@Then("the shopping cart badge should disappear")
+	public void the_shopping_cart_badge_should_disappear() {
+		assertTrue(inventoryPage.waitUntilCartBadgeDisappears());
+	}
 }
