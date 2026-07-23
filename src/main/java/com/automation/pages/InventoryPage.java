@@ -27,7 +27,6 @@ public class InventoryPage extends BasePage {
 		
 		By addButton = By.xpath("//div[text()='"+productName+"']"+"/ancestor::div[@class='inventory_item']"+"//button");
 		click(addButton);
-		
 	}
 	
 	public String getCartBadgeCount() {

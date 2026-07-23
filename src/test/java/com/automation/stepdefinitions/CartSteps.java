@@ -22,5 +22,6 @@ public class CartSteps{
 		 inventoryPage = new InventoryPage(DriverFactory.getDriver());
 		assertEquals(expectedCount, inventoryPage.getCartBadgeCount());
 	}
+	 
 	
 }
