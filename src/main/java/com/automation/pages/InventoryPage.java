@@ -8,6 +8,7 @@ import com.automation.base.BasePage;
 public class InventoryPage extends BasePage {
 	
 	private By pageTitle = By.className("title");
+	private By cartBadge = By.className("shopping_cart_badge");
 	
 	public InventoryPage(WebDriver driver) {
 		super(driver);
@@ -20,5 +21,18 @@ public class InventoryPage extends BasePage {
 	public boolean isInventoryPageDisplayed() {
 		return getPageTitle().equals("Products");
 	}
+	
+	
+	public void addProductToCart(String productName) {
+		
+		By addButton = By.xpath("//div[text()='"+productName+"']"+"/ancestor::div[@class='inventory_item']"+"//button");
+		click(addButton);
+		
+	}
+	
+	public String getCartBadgeCount() {
+		return getText(cartBadge);
+	}
+	
 
 }

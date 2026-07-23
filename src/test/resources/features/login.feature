@@ -1,4 +1,4 @@
-Feature: Lgogin functionality
+Feature: Login functionality
 
   Scenario: Successful login with valid credentials
   

@@ -20,6 +20,9 @@
     <!-- Library Versions -->
     <selenium.version>4.46.0</selenium.version>
     <cucumber.version>7.34.4</cucumber.version>
+    
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 </properties>
 
