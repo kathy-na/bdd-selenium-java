@@ -13,11 +13,18 @@ public class CheckoutPage extends BasePage {
     private By continueButton = By.id("continue");
     private By finishButton = By.id("finish");
     private By completeMessage = By.className("complete-header");
+    private By errorMessage = By.cssSelector("[data-test='error']");
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
     }
-
+    
+    
+    public String getPostalCodeValue() {
+        return driver.findElement(postalCodeInput)
+                .getAttribute("value");
+    }
+        
     public void enterCheckoutInformation(
             String firstName,
             String lastName,
@@ -26,6 +33,7 @@ public class CheckoutPage extends BasePage {
         type(firstNameInput, firstName);
         type(lastNameInput, lastName);
         type(postalCodeInput, postalCode);
+        
     }
 
     public void clickContinue() {
@@ -43,4 +51,18 @@ public class CheckoutPage extends BasePage {
     public boolean isOrderCompleted() {
         return getCompleteMessage().equals("Thank you for your order!");
     }
+    
+    public String getErrorMessage() {
+    	return getText(errorMessage);
+    }
+    
+    private By pageTitle = By.className("title");
+
+	public String getPageTitle() {
+	    return getText(pageTitle);
+	}
+
+	public boolean isCheckoutOverviewDisplayed() {
+	    return getPageTitle().equals("Checkout: Overview");
+	}
 }

@@ -58,26 +58,41 @@ public class CartSteps{
 	        String postalCode) {
 
 	    checkoutPage = new CheckoutPage(DriverFactory.getDriver());
-
+	    
 	    checkoutPage.enterCheckoutInformation(
 	            firstName,
 	            lastName,
 	            postalCode
 	    );
+
 	}
 	
-	@When("I complete the order")
-	public void i_complete_the_order() {
+	@When("I click the Continue button")
+	public void i_click_the_countinue_button() {
 		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
 		checkoutPage.clickContinue();
+		
+	}
+	
+	@When("I finish the order")
+	public void i_finish_the_order() {
+		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
 		checkoutPage.clickFinish();
 	}
-
+	
 	@Then("the order should be completed successfully")
 	public void the_order_should_be_completed_successfully() {
 		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
 		
 		assertTrue(checkoutPage.isOrderCompleted());
+	}
+
+	@Then("the checkout error message should be {string}")
+	public void the_checkout_error_message_should_be(String expectedMessage) {
+		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
+		String actualMessage = checkoutPage.getErrorMessage();
+		
+		assertEquals(expectedMessage, actualMessage);
 	}
 	
 	
