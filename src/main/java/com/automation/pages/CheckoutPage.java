@@ -1,7 +1,9 @@
 package com.automation.pages;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.automation.base.BasePage;
 
@@ -39,7 +41,19 @@ public class CheckoutPage extends BasePage {
     public void clickContinue() {
         click(continueButton);
     }
-
+    
+    public boolean isOverviewPageDisplayed() {
+        try {
+            wait.until(
+                ExpectedConditions.urlContains("checkout-step-two.html")
+            );
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+    
+    
     public void clickFinish() {
         click(finishButton);
     }

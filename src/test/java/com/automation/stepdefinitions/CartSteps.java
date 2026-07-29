@@ -74,6 +74,16 @@ public class CartSteps{
 		
 	}
 	
+	/* 오류 보기 위해 추가 */
+	@Then("I should be on the checkout overview page")
+	public void i_should_be_on_the_checkout_overview_page() {
+	    assertTrue(
+	        checkoutPage.isOverviewPageDisplayed(),
+	        "Checkout Overview 화면으로 이동하지 않았습니다."
+	    );
+	}
+	
+	
 	@When("I finish the order")
 	public void i_finish_the_order() {
 		checkoutPage = new CheckoutPage(DriverFactory.getDriver());

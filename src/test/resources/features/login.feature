@@ -1,5 +1,5 @@
 Feature: Login functionality
-
+@TC-LOGIN-001
   Scenario: Successful login with valid credentials
   
      Given I open the SauceDemo login page
