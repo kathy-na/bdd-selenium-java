@@ -8,6 +8,9 @@ import com.automation.pages.CartPage;
 import com.automation.pages.InventoryPage;
 import com.automation.pages.CheckoutPage;
 
+import java.util.List;
+import io.cucumber.datatable.DataTable;
+
 
 import io.cucumber.java.en.*;
 
@@ -56,6 +59,10 @@ public class CartSteps{
 		    String firstName,
 	        String lastName,
 	        String postalCode) {
+		
+		System.out.println("First name received: [" + firstName + "]");
+	    System.out.println("Last name received: [" + lastName + "]");
+	    System.out.println("Postal code received: [" + postalCode + "]");
 
 	    checkoutPage = new CheckoutPage(DriverFactory.getDriver());
 	    
@@ -71,6 +78,16 @@ public class CartSteps{
 	public void i_click_the_countinue_button() {
 		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
 		checkoutPage.clickContinue();
+		
+		System.out.println(
+	            "Current URL: " +
+	            DriverFactory.getDriver().getCurrentUrl()
+	    );
+
+	    System.out.println(
+	            "Page title: " +
+	            checkoutPage.getPageTitle()
+	    );
 		
 	}
 	
@@ -104,6 +121,39 @@ public class CartSteps{
 		
 		assertEquals(expectedMessage, actualMessage);
 	}
+	
+	@Then("the cart should contain the following products:")
+	public void the_cart_should_contain_the_following_products(io.cucumber.datatable.DataTable dataTable) {
+	    cartPage = new CartPage(DriverFactory.getDriver());
+	    
+	    List<String> expectedProducts = dataTable.asList();
+	    
+	    List<String> actualProducts = cartPage.getCartProductNames();
+	    
+	    assertEquals(expectedProducts, actualProducts);
+
+	}
+	
+	@Then("the item total should equal the sum of the individual product prices")
+	public void the_item_total_should_equal_the_sum_of_the_individual_product_prices() {
+		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
+		
+		List<Double> individualPrices = checkoutPage.getIndividualProductPrices();
+		
+		double expectedItemTotal = individualPrices.stream().mapToDouble(Double::doubleValue).sum();
+		
+		double actualItemTotal = checkoutPage.getItemTotal();
+		
+		System.out.println("Expected Item Total:" + expectedItemTotal);
+		System.out.println("Actual Item Total:" + actualItemTotal);
+		
+		assertEquals(expectedItemTotal,actualItemTotal,0.01);
+	}
+
+	@Then("the total amount should equal the item total plus tax")
+	public void the_total_amount_should_equal_the_item_total_plus_tax() {
+	}
+	
 	
 	
 }

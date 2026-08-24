@@ -4,6 +4,8 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.automation.base.BasePage;
 
@@ -16,6 +18,8 @@ public class CheckoutPage extends BasePage {
     private By finishButton = By.id("finish");
     private By completeMessage = By.className("complete-header");
     private By errorMessage = By.cssSelector("[data-test='error']");
+    private By individualProductPrices = By.className("inventory_item_price");
+    private By itemTotalLabel = By.className("summary_subtotal_label");
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -35,6 +39,24 @@ public class CheckoutPage extends BasePage {
         type(firstNameInput, firstName);
         type(lastNameInput, lastName);
         type(postalCodeInput, postalCode);
+        
+        System.out.println(
+                "First name field value: [" +
+                driver.findElement(firstNameInput).getAttribute("value") +
+                "]"
+        );
+
+        System.out.println(
+                "Last name field value: [" +
+                driver.findElement(lastNameInput).getAttribute("value") +
+                "]"
+        );
+
+        System.out.println(
+                "Postal code field value: [" +
+                driver.findElement(postalCodeInput).getAttribute("value") +
+                "]"
+        );
         
     }
 
@@ -78,5 +100,21 @@ public class CheckoutPage extends BasePage {
 
 	public boolean isCheckoutOverviewDisplayed() {
 	    return getPageTitle().equals("Checkout: Overview");
+	}
+	
+	public List<Double> getIndividualProductPrices() {
+		return driver.findElements(individualProductPrices)
+				.stream().map(element -> element.getText())
+				.map(priceText ->priceText.replace("$",""))
+				.map(Double::parseDouble)
+				.collect(Collectors.toList());
+	}
+	
+	public double getItemTotal() {
+		
+		String itemTotalText = driver.findElement(itemTotalLabel).getText();
+		
+		String itemTotalValue = itemTotalText.replace("Item total: $", "");
+		return Double.parseDouble(itemTotalValue);
 	}
 }

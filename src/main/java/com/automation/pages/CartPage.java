@@ -2,7 +2,8 @@ package com.automation.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import com.automation.base.BasePage;
 
 public class CartPage extends BasePage {
@@ -10,6 +11,7 @@ public class CartPage extends BasePage {
     private By pageTitle = By.className("title");
     private By checkoutButton = By.id("checkout");
     private By continueShoppingButton = By.id("continue-shopping");
+    private By cartProductNames = By.className("inventory_item_name");
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -50,4 +52,9 @@ public class CartPage extends BasePage {
     public void continueShopping() {
         click(continueShoppingButton);
     }
+    
+    public List<String> getCartProductNames() {
+		return driver.findElements(cartProductNames).stream().map(element -> element.getText()).collect(Collectors.toList());
+		}
+
 }

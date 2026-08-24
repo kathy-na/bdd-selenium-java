@@ -40,3 +40,27 @@ And I proceed to checkout
 When I enter checkout information with first name "Juliet", last name "Kim", and postal code ""
 And I click the Continue button
 Then the checkout error message should be "Error: Postal Code is required"
+
+@TC-ORDER-003
+Scenario: Complete checkout with multiple products and verify total amount
+Given I open the SauceDemo login page
+And I login with username "standard_user" and password "secret_sauce"
+And I add the "Sauce Labs Bike Light" product to the cart
+And I add the "Sauce Labs Bolt T-Shirt" product to the cart
+Then the shopping cart badge should display "2"
+
+When I open the shopping cart
+Then the cart should contain the following products:
+|Sauce Labs Bike Light|
+|Sauce Labs Bolt T-Shirt|
+
+When I proceed to checkout
+And I enter checkout information with first name "Juliet", last name "Kim", and postal code "56789"
+And I click the Continue button
+Then I should be on the checkout overview page
+And the item total should equal the sum of the individual product prices
+And the total amount should equal the item total plus tax
+
+Then the order should be completed successfully
+
+
