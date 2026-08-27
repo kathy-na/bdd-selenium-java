@@ -19,8 +19,15 @@ public class CheckoutPage extends BasePage {
     private By completeMessage = By.className("complete-header");
     private By errorMessage = By.cssSelector("[data-test='error']");
     private By individualProductPrices = By.className("inventory_item_price");
+    private By pageTitle = By.className("title");
     private By itemTotalLabel = By.className("summary_subtotal_label");
-
+    private By taxLabel = By.className("summary_tax_label");
+    private By totalLabel = By.className("summary_total_label");
+    private double parsePrice(String priceText) {
+    	String numericText = priceText.replaceAll("[^0-9.]", "");
+    	return Double.parseDouble(numericText);
+    }
+    
     public CheckoutPage(WebDriver driver) {
         super(driver);
     }
@@ -92,7 +99,7 @@ public class CheckoutPage extends BasePage {
     	return getText(errorMessage);
     }
     
-    private By pageTitle = By.className("title");
+    
 
 	public String getPageTitle() {
 	    return getText(pageTitle);
@@ -113,8 +120,17 @@ public class CheckoutPage extends BasePage {
 	public double getItemTotal() {
 		
 		String itemTotalText = driver.findElement(itemTotalLabel).getText();
+		return parsePrice(itemTotalText);
+	}
+	
+	public double getTax() {
+		String taxText = driver.findElement(taxLabel).getText();
+		return parsePrice(taxText);
+	}
+	
+	public double getTotal() {
+		String totalText = driver.findElement(totalLabel).getText();
+		return parsePrice(totalText);
 		
-		String itemTotalValue = itemTotalText.replace("Item total: $", "");
-		return Double.parseDouble(itemTotalValue);
 	}
 }

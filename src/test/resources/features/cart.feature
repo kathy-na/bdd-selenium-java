@@ -60,7 +60,7 @@ And I click the Continue button
 Then I should be on the checkout overview page
 And the item total should equal the sum of the individual product prices
 And the total amount should equal the item total plus tax
-
+And I finish the order
 Then the order should be completed successfully
 
 

@@ -111,7 +111,7 @@ public class CartSteps{
 	public void the_order_should_be_completed_successfully() {
 		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
 		
-		assertTrue(checkoutPage.isOrderCompleted());
+		assertTrue(checkoutPage.isOrderCompleted(),"Order completion message was not displayed as expected.");
 	}
 
 	@Then("the checkout error message should be {string}")
@@ -152,6 +152,17 @@ public class CartSteps{
 
 	@Then("the total amount should equal the item total plus tax")
 	public void the_total_amount_should_equal_the_item_total_plus_tax() {
+		checkoutPage = new CheckoutPage(DriverFactory.getDriver());
+		
+		double itemTotal = checkoutPage.getItemTotal();
+		double tax = checkoutPage.getTax();
+		double expectedTotal = itemTotal + tax;
+		double actualTotal = checkoutPage.getTotal();
+		System.out.println("Item Total:"+ itemTotal);
+		System.out.println("Tax:"+ tax);
+		System.out.println("Expected Total:"+ expectedTotal);
+		System.out.println("Actual Total:"+ actualTotal);
+		assertEquals(expectedTotal, actualTotal, 0.01);
 	}
 	
 	
