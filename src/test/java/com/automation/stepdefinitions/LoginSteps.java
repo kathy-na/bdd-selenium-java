@@ -1,9 +1,11 @@
 package com.automation.stepdefinitions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.automation.factory.DriverFactory;
 import com.automation.pages.InventoryPage;
 import com.automation.pages.LoginPage;
+import com.automation.utils.Constants;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -29,6 +31,19 @@ public class LoginSteps {
 		inventoryPage = new InventoryPage(DriverFactory.getDriver());
 		
 		assertTrue(inventoryPage.isInventoryPageDisplayed());
+	}
+	
+	@Then("I should see the login error message {string}")
+	public void i_should_see_the_login_error_message(String expectedMessage) {
+		String actualMessage = loginPage.getErrorMessage();
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Then("I should remain on the login page")
+	public void i_should_remain_on_the_login_page() {
+		String currentUrl = DriverFactory.getDriver().getCurrentUrl();
+		
+		assertEquals(Constants.BASE_URL, currentUrl);
 	}
 	
 }
