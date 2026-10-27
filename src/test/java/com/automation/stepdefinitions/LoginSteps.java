@@ -42,7 +42,6 @@ public class LoginSteps {
 	@Then("I should remain on the login page")
 	public void i_should_remain_on_the_login_page() {
 		String currentUrl = DriverFactory.getDriver().getCurrentUrl();
-		
 		assertEquals(Constants.BASE_URL, currentUrl);
 	}
 	

@@ -13,3 +13,9 @@ Feature: Login functionality
 	 Then I should see the login error message "Epic sadface: Sorry, this user has been locked out."
 	 And I should remain on the login page
   
+@TC-LOGIN-003
+  Scenario: Login fails with an incorrect password
+     Given I open the SauceDemo login page
+     When I login with username "standard_user" and password "wrong_password"
+     Then I should see the login error message "Epic sadface: Username and password do not match any user in this service"
+     And I should remain on the login page
