@@ -21,16 +21,15 @@ Feature: Login functionality
      And I should remain on the login page
      
 @TC-LOGIN-004
-  Scenario: Login fails with and empty password
+  Scenario Outline: Login fails when a required field is empty
     Given I open the SauceDemo login page
-    When I login with username "standard_user" and password ""
-    Then I should see the login error message "Epic sadface: Password is required"
+    When I login with username "<username>" and password "<password>"
+    Then I should see the login error message "<errorMessage>"
     And I should remain on the login page
     
-@TC-LOGIN-005
-  Scenario: Login fails with and empty username
-	Given I open the SauceDemo login page   
-    When I login with username "" and password "secret_sauce"
-    Then I should see the login error message "Epic sadface: Username is required"
-    And I should remain on the login page
+    Examples:
+	  | username        | password     |errorMessage                        |
+	  | standard_user   |              |Epic sadface: Password is required  |    
+	  | locked_out_user |              |Epic sadface: Password is required  |
+	  |                 | secret_sauce |Epic sadface: Username is required  |
     
